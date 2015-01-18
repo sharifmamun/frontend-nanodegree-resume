@@ -13,7 +13,6 @@
 
 
 h1 {
-
   font-size: 40px;
   color: #F5A623;
   line-height: 48px;
@@ -137,6 +136,7 @@ a {
 }
 
 ul {
+  display: inline;
   list-style-type: none;
 }
 
