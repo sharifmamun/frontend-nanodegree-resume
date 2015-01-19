@@ -1,134 +1,229 @@
-var formattedName = HTMLheaderName.replace("%data%", "S.M. Al Mamun");
-var formattedRole = HTMLheaderRole.replace("%data%", "Software Developer");
-
-//HTMLheaderName.replace("%data%", formattedName);
-//HTMLheaderRole.replace("%data%", formattedRole);
-
+// Contact Information
 var bio = {
-    "name": "S. M. Al Mamun",
+    "name": "Sharif Mamun",
     "role": "Software Developer",
     "contacts": {
         "mobile": "+1-778-689-2015",
         "email": "sharif.mamun@gmail.com",
-        "github": "https://github.com/sharifmamun",
+        "github": "sharifmamun",
         "twitter": "@sharifmamun",
-        "location": "Vancouver"
+        "location": "Vancouver, Canada"
     },
-    "welcome_msg": "Hello",
+    "welcomeMessage": "Hello, Welcome to my SPA",
     "skills": [
         "C/C++",
         "Java",
-        "Python"
+        "Python",
+        "JavaScript/JQuery",
+        "Backbone.js"
     ],
-    "picture_url": "https://media.licdn.com/media/p/7/005/05d/1e4/38563d1.jpg"
+    "biopic": "https://media.licdn.com/mpr/mpr/shrink_500_500/p/5/005/0a3/0a5/2cfe5de.jpg"
 };
 
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
+bio.display = function() {
+	var formattedName = HTMLheaderName.replace("%data%", bio.name),
+		formattedRole = HTMLheaderRole.replace("%data%", bio.role),
+		formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile),
+		formattedEmail = HTMLemail.replace("%data%", bio.contacts.email),
+		formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github),
+		formattedTwitter = HTMLtwitter.replace("%data%", bio.contacts.twitter),
+		formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
 
-$("#topContacts").append(HTMLcontactGeneric.replace("%data%", bio.contacts.mobile));
-$("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
-$("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
-$("#topContacts").append(HTMLtwitter.replace("%data%", bio.contacts.twitter));
-$("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
-//$("#header").append(bio.contacts.email);
+	$("#header").prepend(formattedRole)
+				.prepend(formattedName);
 
-if (bio["skills"].length > 0){
- 	$("#skillsChart").append(HTMLskillsStart);
- 	//$("#header").append(HTMLskills);
- 	$("#skills").append(HTMLskills.replace("%data%", bio.skills[0]));
+	$("#topContacts").append(formattedMobile)
+					 .append(formattedEmail)
+					 .append(formattedGithub)
+					 .append(formattedTwitter)
+					 .append(formattedLocation);
+
+	$("#header").append(HTMLbioPic.replace("%data%", bio.biopic));
+	$("#header").append(HTMLWelcomeMsg.replace("%data%", bio.welcomeMessage));
+
+	if (bio["skills"].length > 0){
+		$("#header").append(HTMLskillsStart);
+	    bio.skills.forEach(function(skill) {
+	        var formattedSkill = HTMLskills.replace("%data%", skill);
+	        $("#skills").append(formattedSkill);
+	    });
+	}
+
+
+	$("#footerContacts").append(formattedMobile)
+	    .append(formattedEmail)
+	    .append(formattedGithub)
+	    .append(formattedTwitter)
+	    .append(formattedLocation);
 }
 
-var work = {
-	"jobs":[{
-	"title": "Software Developer in Test",
-	"employer": "Beanworks Solutions Inc.",
-	"location": "Vancouver, Canada",
-	"dates": "December, 2013 - Present",
-	"description": "Working as a developer on automation and backend stuffs."
-	},
-	{
-	"title": "Freelance Software Developer",
-	"employer": "Seytrack",
-	"location": "Mahe, Seychelles",
-	"dates": "July, 2013 - October, 2013 ",
-	"description": "Working as a developer on automation and backend stuffs."
-	},
-	]
-};
+bio.display();
 
-for (job in work.jobs){
-	$("#workExperience").append(HTMLworkStart);
-	$(".work-entry:last").append(HTMLworkEmployer.replace("%data%", work["jobs"][job]["employer"]));
-	$(".work-entry:last").append(HTMLworkTitle.replace("%data%", work["jobs"][job]["title"]));
-	$(".work-entry:last").append(HTMLworkDates.replace("%data%", work["jobs"][job]["dates"]));
-	$(".work-entry:last").append(HTMLworkLocation.replace("%data%", work["jobs"][job]["location"]));
-	$(".work-entry:last").append("<br>");
-}
+// Education Section
 
 var education = {
 	"schools": [
-	{
-		"name": "University of Manitoba",
-		"location": "Winnipeg, Manitoba",
-		"degree": "MSc",
-		"major":["CompSci"]
-	},
-	{
-		"name": "IUT",
-		"location": "Dhaka, Bangladesh",
-		"degree": "BSc",
-		"major":["CompSci"]
-	}
+		{
+			"name": "University of Manitoba",
+			"location": "Winnipeg, Canada",
+			"degree": "MSc",
+			"majors": ["Computer Science"],
+			"dates": 2013,
+			"url": "http://umanitoba.ca/"
+		},
+		{
+			"name": "IUT",
+			"location": "Dhaka, Bangladesh",
+			"degree": "BSc",
+			"major": ["Computer Science"],
+			"dates": 2009,
+			"url": "http://iutoic-dhaka.edu/"
+		}
+	],
+
+    "onlineCourses" : [
+        {
+            "title" : "Intro to HTML and CSS",
+            "school" : "Codecademy",
+            "dates" : "2014",
+            "url" : "https://www.udacity.com/course/ud304"
+        },
+        {
+            "title" : "JavaScript Basics",
+            "school" : "Udacity",
+            "dates" : "2015",
+            "url" : "http://www.udacity.com/course/ud804"
+        }
+    ]
+};
+
+education.display = function() {
+   education.schools.forEach(function(school) {
+        $("#education").append(HTMLschoolStart);
+
+        var formattedName = HTMLschoolName.replace("%data%", school.name),
+	        formattedLocation = HTMLschoolLocation.replace("%data%", school.location),
+	        formattedDates = HTMLworkDates.replace("%data%", school.dates),
+	        formattedDegree = HTMLschoolDegree.replace("%data%", school.degree),
+	        formattedMajor = HTMLschoolMajor.replace("%data%", school.majors);
+
+
+        $(".education-entry:last").append(formattedName + formattedDegree)
+            .append(formattedDates)
+            .append(formattedLocation)
+            .append(formattedMajor);
+    });
+
+    //Online Classes
+    if (education.onlineCourses.length > 0) {
+        $(".education-entry:last").append(HTMLonlineClasses);
+        education.onlineCourses.forEach(function (course) {
+            var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", course.title).replace('#', course.url),
+            	formattedOnlineSchool = HTMLonlineSchool.replace("%data%", course.school),
+            	formattedOnlineDates = HTMLonlineDates.replace("%data%", course.dates);
+
+            $(".education-entry:last")
+                .append(formattedOnlineTitle + formattedOnlineSchool)
+                .append(formattedOnlineDates)
+                .append('<br>');
+        });
+    }
+};
+
+education.display();
+
+// Work Section
+var work = {
+	"jobs":[
+		{
+			"employer": "Beanworks Solutions Inc.",
+			"title": "Software Developer in Test",
+			"location": "Vancouver, British Columbia",
+			"dates": "December, 2013 - Present",
+			"description": "Working as a developer on automation and frontend stuffs."
+		},
+		{
+			"employer": "Seytrack",
+			"title": "Freelance Software Developer",
+			"location": "Mahe, Seychelles",
+			"dates": "July, 2013 - October, 2013 ",
+			"description": "Worked as full stack developer on the largest GPS tracked vehicle system of Seychelles."
+		},
+		{
+			"employer": "University of Manitoba",
+			"title": "Research/Teaching Assistant",
+			"location": "Winnipeg, Manitoba",
+			"dates": "September, 2010 - November, 2013 ",
+			"description": "Worked as RA for my thesis and TA for undergraduate courses."
+		},
 	]
 };
 
-for (school in education.schools){
-	$("#education").append(HTMLschoolStart);
-	$(".education-entry:last").append(HTMLschoolName.replace("%data%", education["schools"][school]["degree"]));
-	$(".education-entry:last").append(HTMLschoolDegree.replace("%data%", education["schools"][school]["name"]));
-	$(".education-entry:last").append(HTMLschoolDates.replace("%data%", education["schools"][school]["major"]));
-}
+//display work object
+work.display = function() {
+   work.jobs.forEach(function(job) {
+        $("#workExperience").append(HTMLworkStart);
 
-var project = {
+        var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer),
+	        formattedTitle = HTMLworkTitle.replace("%data%", job.title),
+	        formattedEmployerTitle = formattedEmployer + formattedTitle,
+	        formattedEmployerLocation = HTMLworkLocation.replace("%data%", job.location),
+	        formattedDates = HTMLworkDates.replace("%data%", job.dates),
+	        formattedDescription = HTMLworkDescription.replace("%data%", job.description);
+
+        $(".work-entry:last").append(formattedEmployerTitle)
+            .append(formattedEmployerLocation)
+            .append(formattedDates)
+            .append(formattedDescription);
+    });
+};
+
+work.display();
+
+// Projects Section
+
+var projects = {
 	"projects": [
 	{
 		"title": "BeanworksAP",
-		"dates": "2013-",
+		"dates": "2013 - Present",
 		"description": "AP Automation",
-		"image": "https://www.beanworks.com/wp-content/uploads/2014/02/slide1-work-smarter-not-harder.png"
+		"images": ["images/automation.jpg"]
 	},
 	{
 		"title": "Alignment Automation",
-		"dates": "2013-",
-		"description": "AP Automation",
-		"image": "images/fry.jpg"
+		"dates": "2010 - 2013",
+		"description": "Worked on this project as part of my Master's thesis.",
+		"images": ["images/alignment.png"]
 	}
 	]
 };
 
-abc();
-//project.display =
-function abc() {
 
-	for (val in project.projects){
-		$("#projects").append(HTMLprojectStart);
-		$(".project-entry:last").append(HTMLprojectTitle.replace("%data%", project["projects"][val]["title"]));
-		$(".project-entry:last").append(HTMLprojectDates.replace("%data%", project["projects"][val]["dates"]));
-		$(".project-entry:last").append(HTMLprojectDescription.replace("%data%", project["projects"][val]["description"]));
-		if (project["projects"][val]["image"]) {
-			$(".project-entry:last").append(HTMLprojectImage.replace("%data%", project["projects"][val]["image"]));
-		}
-	}
-}
-//};
+projects.display = function() {
+   projects.projects.forEach(function(project) {
+        $("#projects").append(HTMLprojectStart);
 
+        var formattedProjectTitle = HTMLprojectTitle.replace("%data%", project.title),
+	        formattedDates = HTMLprojectDates.replace("%data%", project.dates),
+	        formattedDescription = HTMLprojectDescription.replace("%data%", project.description),
+	        formattedImage = "";
 
-//$("#topContacts").append("<br/>");
-//$("#topContacts").append(HTMLskills.replace("%data%", "Python"));
+        $(".project-entry:last").append(formattedProjectTitle)
+            .append(formattedDates)
+            .append(formattedDescription);
+
+	    if (project["images"].length > 0) {
+	        project.images.forEach(function (image) {
+	        	formattedImage = HTMLprojectImage.replace("%data%", image);
+	            $(".project-entry:last").append(formattedImage);
+	        });
+	    }
+    });
+};
+
+projects.display();
+
 $("#letsConnect").prepend(work["current_job"]);
-//$("#letsConnect").prepend("<br/>");
-//$("#main").prepend(education.schools);
-//$("#workExperience").append(HTMLskills.replace("%data%", "Python"));
+$("#main").append(internationalizeButton);
 $("#mapDiv").append(googleMap);
-//$("#mapDiv").append(internationalizeButton);
