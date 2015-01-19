@@ -75,7 +75,7 @@ var education = {
 			"name": "IUT",
 			"location": "Dhaka, Bangladesh",
 			"degree": "BSc",
-			"major": ["Computer Science"],
+			"majors": ["Computer Science"],
 			"dates": 2009,
 			"url": "http://iutoic-dhaka.edu/"
 		}
@@ -84,7 +84,7 @@ var education = {
     "onlineCourses" : [
         {
             "title" : "Intro to HTML and CSS",
-            "school" : "Codecademy",
+            "school" : "Udacity",
             "dates" : "2014",
             "url" : "https://www.udacity.com/course/ud304"
         },
@@ -116,7 +116,8 @@ education.display = function() {
 
     //Online Classes
     if (education.onlineCourses.length > 0) {
-        $(".education-entry:last").append(HTMLonlineClasses);
+        $("#education").append(HTMLonlineClasses)
+        			   .append(HTMLschoolStart);
         education.onlineCourses.forEach(function (course) {
             var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", course.title).replace('#', course.url),
             	formattedOnlineSchool = HTMLonlineSchool.replace("%data%", course.school),
